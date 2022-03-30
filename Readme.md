@@ -63,6 +63,7 @@ Hydrological
 
 
 `code`
+```{python}
 #%%
 #Parameter selection (initial guess)
 p1 = [1,2,1,3,50,1,0.15,0.4,0.04,0.1,0.5,1.2,0.1,0.8,0.05,3.5,1,1] # parameters to be calibrated
@@ -71,6 +72,7 @@ p1 = [1,2,1,3,50,1,0.15,0.4,0.04,0.1,0.5,1.2,0.1,0.8,0.05,3.5,1,1] # parameters 
 v = [Prec[0], Temp[0], ET[0], LTAT[0]]
 St = 50*np.ones(5) # Soil, Uz, Lz, Snow, SnowWC State initialisation
 QNew = np.zeros((len(Q),1))
+```
 
 ### 1.0.0.0
 * Initial release.
