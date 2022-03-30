@@ -16,6 +16,8 @@ Hydrological
 - Has two tanks that represent the upper zone and lower zone groundwater processes
 
 
+
+
  Args:
         p [numpy array of 18 positions]: Parameter Set
             p[1] ->  TT = Limit temperature for rain/snow precipitation 
@@ -59,3 +61,21 @@ Hydrological
 
 ## Examples
 
+
+`code`
+#%%
+#Parameter selection (initial guess)
+p1 = [1,2,1,3,50,1,0.15,0.4,0.04,0.1,0.5,1.2,0.1,0.8,0.05,3.5,1,1] # parameters to be calibrated
+
+#%%
+v = [Prec[0], Temp[0], ET[0], LTAT[0]]
+St = 50*np.ones(5) # Soil, Uz, Lz, Snow, SnowWC State initialisation
+QNew = np.zeros((len(Q),1))
+
+### 1.0.0.0
+* Initial release.
+
+## License
+copyright Copyright (C) 2022 Gerald corzo
+
+This program comes with ABSOLUTELY NO WARRANTY. This is free software, and you are welcome to redistribute it under the conditions of the GPLv3 license.
