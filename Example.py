@@ -40,9 +40,28 @@ from HBV import *
 Qnew,St2=HBV(p1,v,St)
 
 #%%
+#Running all the data
+Q=[]
+S=[]
+#p1 is the parameters that need to be calibrated
+for i,Pr in enumerate(Prec):
+    v = [Pr, Temp[i], ET[i], LTAT[i]]
+    Qnew,St2=HBV(p1,v,St,TFAC = 1,AREA = 2900)
+    Q.append(Qnew)
+    S.append(St2)
 
 
 
+#%%
+import matplotlib.pyplot as plt
+plt.plot(Q)
+
+#%%
+Xmin=0
+Xmax=len(Q)
+x=np.linspace(0,
+              len(Q),len(Q))
+Plot2Axis(x,Prec,Q,"Precipitation","Discharge",xmin=Xmin,xmax=Xmax)
 
 #%%
 #OPTOPT = optimset('Algorithm','interior-point')

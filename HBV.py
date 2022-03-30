@@ -94,7 +94,7 @@ def  HBV(p,v,St,TFAC = 1,AREA = 2900):
 
     #Non optimised parameters
 
-    print(St)
+    #print(St)
     # States vector St[1,5]
     SPOld = St[0] # Snow Pack
     SMOld = St[1] # Soil Moisture
@@ -194,10 +194,10 @@ def  HBV(p,v,St,TFAC = 1,AREA = 2900):
     
     # if the upper zone storage is greater 
     #than the potential capilar flow, then is going to be caiplar flow    
-    print(TFAC)
-    print(CFLUX)
-    print(SMOld)
-    print(FC)
+    #print(TFAC)
+    #print(CFLUX)
+    #print(SMOld)
+    #print(FC)
     
     if (TFAC*CFLUX*(1.0-(SMOld/FC))<UZOld): 
         CF = TFAC*CFLUX*(1.0-(SMOld/FC)) #capilar flow definition
@@ -254,6 +254,22 @@ def  HBV(p,v,St,TFAC = 1,AREA = 2900):
     
     return QNew,St
 
+#%%
+import matplotlib.pyplot as plt
+def Plot2Axis(x,y1,y2,var1="precip",var2="surf",Name="HRU",xmin=0,xmax=2000):
+  fig, ax1 = plt.subplots()
+  plt.xlim(xmin,xmax)
+  ax2 = ax1.twinx()
+
+  ax1.plot(x, y1, 'g-')
+  ax2.plot(x, y2, 'b-')
+
+  ax1.set_xlabel('X data')
+  ax1.set_ylabel(f'Y1 {var1}', color='g')
+  ax2.set_ylabel(f'Y2 {var2}', color='b')
+  plt.savefig(Name)
+  #plt.show()  
 
 
+    
 # %%
