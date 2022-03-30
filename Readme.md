@@ -16,8 +16,9 @@ Hydrological
 - Has two tanks that represent the upper zone and lower zone groundwater processes
 
 
+```{python}
 
-
+ def HBV[p,v,St,TFAC = 1,AREA = 2900]
  Args:
         p [numpy array of 18 positions]: Parameter Set
             p[1] ->  TT = Limit temperature for rain/snow precipitation 
@@ -57,7 +58,7 @@ Hydrological
         TFAC = Time factor  = dt/86400
         AREA = Catchment area [km²]
             
-    """
+```
 
 ## Examples
 
@@ -65,6 +66,7 @@ Hydrological
 `code`
 ```{python}
 #%%
+from HBV import *
 #Parameter selection (initial guess)
 p1 = [1,2,1,3,50,1,0.15,0.4,0.04,0.1,0.5,1.2,0.1,0.8,0.05,3.5,1,1] # parameters to be calibrated
 
