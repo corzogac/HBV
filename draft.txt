@@ -1,0 +1,10 @@
+''' 
+  TT = p[0]   Temperature threshold for Rain to become snow 
+            TTI = p[1] temperature treshold for linear mix of snow/rain precipitation
+            TTM = p[2]
+            CFMAX = p[3]
+            RFCF = p[16]
+            SFCF = p[17]
+            CWH = p[12]
+            CFR = p[13]
+'''

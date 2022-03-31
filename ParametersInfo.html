@@ -1,0 +1,332 @@
+<body>
+ <table>
+  <tr>
+   <td>
+    p[1]
+   </td>
+   <td>
+    TT = Limit temperature for rain/snow precipitation
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[2]
+   </td>
+   <td>
+    TTI = temperature treshold for linear mix of snow/rain precipitation
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[3]
+   </td>
+   <td>
+    TTM = Limit temperature for melting
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[4]
+   </td>
+   <td>
+    CFMAX = Degree day factor [measures the temperature variation along the day]
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[5]
+   </td>
+   <td>
+    FC = Field Capacity
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[6]
+   </td>
+   <td>
+    ECORR = Evapotranspiration corrector factor
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[7]
+   </td>
+   <td>
+    EP = Long term mean potential evapotranspiration
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[8]
+   </td>
+   <td>
+    LP = Soil moisture value where soil moisture reaches maximum potential evapotranspiration
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[9]
+   </td>
+   <td>
+    K = Upper zone response coefficient
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[10]
+   </td>
+   <td>
+    K1 = Lowe zone response coefficient
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[11]
+   </td>
+   <td>
+    ALPHA = upper zone runoff coefficient
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[12]
+   </td>
+   <td>
+    BETA = Controls the contribution of the increase in the soil moisture or to the response function
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[13]
+   </td>
+   <td>
+    CWH = Maximum amount of water that can be stored in snow pack
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[14]
+   </td>
+   <td>
+    CFR = Refreezing factor
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[15]
+   </td>
+   <td>
+    CFLUX = Capilar flux
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[16]
+   </td>
+   <td>
+    PERC = Percolation
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[17]
+   </td>
+   <td>
+    RFCF = Rainfal correction factor
+   </td>
+  </tr>
+  <tr>
+   <td>
+    p[18]
+   </td>
+   <td>
+    SFCF = Snowfall correction factor
+   </td>
+  </tr>
+  <tr>
+   <td>
+    Default values
+   </td>
+   <td>
+    Overal values	Min	Max
+   </td>
+  </tr>
+  <tr>
+   <td>
+    Ranges
+   </td>
+   <td>
+    For optimization lower and upper limit
+   </td>
+  </tr>
+  <tr>
+   <td>
+    LP
+   </td>
+   <td>
+    0%	100%
+   </td>
+  </tr>
+  <tr>
+   <td>
+    FC
+   </td>
+   <td>
+    100	300
+   </td>
+  </tr>
+  <tr>
+   <td>
+    ALPHA
+   </td>
+   <td>
+    0	8
+   </td>
+  </tr>
+  <tr>
+   <td>
+    BETA
+   </td>
+   <td>
+    0.001	8
+   </td>
+  </tr>
+  <tr>
+   <td>
+    K0
+   </td>
+   <td>
+    0.001	1
+   </td>
+  </tr>
+  <tr>
+   <td>
+    K1
+   </td>
+   <td>
+    0.001	1
+   </td>
+  </tr>
+  <tr>
+   <td>
+    K2
+   </td>
+   <td>
+    0.001	1
+   </td>
+  </tr>
+  <tr>
+   <td>
+    PERC
+   </td>
+   <td>
+    0	30
+   </td>
+  </tr>
+  <tr>
+   <td>
+    CFLUX
+   </td>
+   <td>
+    0	1
+   </td>
+  </tr>
+  <tr>
+   <td>
+    MAXBAS
+   </td>
+   <td>
+    0	50
+   </td>
+  </tr>
+  <tr>
+   <td>
+    UZLo
+   </td>
+   <td>
+    0	300
+   </td>
+  </tr>
+  <tr>
+   <td>
+    Coefficients
+   </td>
+   <td>
+    Snow
+   </td>
+  </tr>
+  <tr>
+   <td>
+    CFMax
+   </td>
+   <td>
+    3 Degree day factor or Melting Factor (Snow Melt= CFMAC*(T-TT))
+   </td>
+  </tr>
+  <tr>
+   <td>
+    SFCF
+   </td>
+   <td>
+    1  Snow Fall Correction Factor (Increase about 1.3-1.5)
+   </td>
+  </tr>
+  <tr>
+   <td>
+    CFR
+   </td>
+   <td>
+    0.05 Refreezing coeficient
+   </td>
+  </tr>
+  <tr>
+   <td>
+    CWH
+   </td>
+   <td>
+    0.1 Water holding Capacity
+   </td>
+  </tr>
+  <tr>
+   <td>
+    Initial states
+   </td>
+   <td>
+    SNOW
+   </td>
+  </tr>
+  <tr>
+   <td>
+    SP
+   </td>
+   <td>
+    0 Initial state Snow pack( Negative value no snow)
+   </td>
+  </tr>
+  <tr>
+   <td>
+    WC
+   </td>
+   <td>
+    0 Initial State Water Content of snow packet
+   </td>
+  </tr>
+  <tr>
+   <td>
+    SM
+   </td>
+   <td>
+    0  Initial state Soil Moisture
+   </td>
+  </tr>
+  <tr>
+   <td>
+    TT
+   </td>
+   <td>
+    0 Threshold temperature - For freeze
+   </td>
+  </tr>
+ </table>
+</body>

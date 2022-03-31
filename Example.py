@@ -1,69 +1,74 @@
-#%%
-import numpy as np
 import matplotlib.pyplot as plt
-from celluloid import Camera
-import pandas as pd
+import numpy as np
+from HBV import *
 
-#%%
+#Reading data
+#read data
 Df=pd.read_excel('Bagmati.xlsx',index_col=0,parse_dates=True)
 Df.head()
-#%%
-Q=Df["Qobs"].to_numpy()
+Qo=Df["Qobs"].to_numpy()
 Epot=Df["Epot"].to_numpy()
 P=Df["P"].to_numpy()
 T=Df["Temp"].to_numpy()
-
-
-#%%
-# For calibration is used percentage 'per' of data
-per = 0.2
-per = int(np.round(per*len(P)))
-Prec = P[1:per]
-Temp = T[1:per]
-Flow = Q[1:per]
-ET = Epot[1:per]
-LTAT = np.mean(Temp[1:per])*np.ones((len(Flow),1))
+LTAT = np.mean(T)*np.ones(len(Qo))
 AREA = 2900
 
+#Initial values
+SP = 10 # Snow Pack
+WC = 10 # Water Content in Snow Pack
+SMOld=20 # Initial value of soil moisture, assuming less than half Field Capacity
+UZ1 = 20 # Upper Zone
+LZ1 = 20 # Lower Zone
 
 
 #%%
-#Parameter selection (initial guess)
-p1 = [1,2,1,3,50,1,0.15,0.4,0.04,0.1,0.5,1.2,0.1,0.8,0.05,3.5,1,1] # parameters to be calibrated
+
+#State Variable
+SP = 0 # Initial state Snow Pack
+WC = 0 # Initial state Water Content in Snow Pack
+
+SMOld = 20 # Initial state Soil Moisture
+UZ1 = 5.6 # Initial State Upper Zone
+LZ1 = 24.3 # Initial state Lower Zone
+
+psnow=[self.TT,self.CFMAX,self.SFCF,self.CWH,self.CFR]
+psoil=[self.FC,self.BETA]
+#Soil moisture percentage in decimal where soil moisture reaches maximum potential evapotranspiration
+pEvap=[self.LP]
+pRun=[self.K,self.K1,self.ALPHA,self.CFR]
+pMaxBas=[self.MaxBas]
+
+p1=[*psnow,*psoil,*pEvap,*pRun,*pMaxBas]
+
+
+#Looping the time series in the model
+for i,P in enumerate(Precipitation):
+    State,Q=HBV(State,P,T[i],Evap[i])
+
 
 #%%
-v = [Prec[0], Temp[0], ET[0], LTAT[0]]
-St = 50*np.ones(5) # Soil, Uz, Lz, Snow, SnowWC State initialisation
-QNew = np.zeros((len(Q),1))
-#%%
-from HBV import *
-Qnew,St2=HBV(p1,v,St)
-
-#%%
-#Running all the data
-Q=[]
-S=[]
-#p1 is the parameters that need to be calibrated
-for i,Pr in enumerate(Prec):
-    v = [Pr, Temp[i], ET[i], LTAT[i]]
-    Qnew,St2=HBV(p1,v,St,TFAC = 1,AREA = 2900)
-    Q.append(Qnew)
-    S.append(St2)
-
-
-
-#%%
-import matplotlib.pyplot as plt
 plt.plot(Q)
+plt.plot(Qo)
 
 #%%
 Xmin=0
 Xmax=len(Q)
 x=np.linspace(0,
               len(Q),len(Q))
-Plot2Axis(x,Prec,Q,"Precipitation","Discharge",xmin=Xmin,xmax=Xmax)
+Plot2Axis(x,Prec,Q,"Precipitation","Discharge",Name="HBVRun",xmin=Xmin,xmax=Xmax)
 
 #%%
+#Fitness functions
+#To calibrate we need a fitness function
+
+def fitness_func(Target,Predicted):
+    output = np.sqrt(np.sum((Target-Predicted))**2)
+    fitness = output/len(Target)
+    return fitness
+#%%
+
+fitness_func(Qo,Q)
+
 #OPTOPT = optimset('Algorithm','interior-point')
 #  Calibration
 LB = [-1,0,0,1,50,0.6,0,0,0,0,0,0,0.001,0.01,0,0,0.6,0.6]
@@ -75,3 +80,14 @@ print('Calibration Done, NSE value')
 #NSECal = -HBV_Wrapper(solCal)
 #FlowCal = QNew
 # %%
+
+
+
+#%% If you want to run for certain percentage of data, you can
+# For calibration percentage 'per' could be 70% of data
+#per = 0.7
+#per = int(np.round(per*len(P)))
+Prec = P[1:per]
+Temp = T[1:per]
+Flow = Qo[1:per]
+ET = Epot[1:per]
