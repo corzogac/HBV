@@ -1,0 +1,5 @@
+
+
+def Prin():
+    print(p)
+    

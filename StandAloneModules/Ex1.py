@@ -9,7 +9,7 @@ from HydrologicalResponse import *
 from Routing import *
 
 #read data
-Df=pd.read_excel('Bagmati.xlsx',index_col=0,parse_dates=True)
+Df=pd.read_excel('../Bagmati.xlsx',index_col=0,parse_dates=True)
 Df.head()
 Qo=Df["Qobs"].to_numpy()
 Epot=Df["Epot"].to_numpy()
@@ -65,7 +65,7 @@ Uz=[]
 Lz=[]
 
 for i,pr in enumerate(P): 
-    SP,WC,insoil,snow=SnowRoutine(p1,pr,T[i],SP,WC,TFAC = 1,AREA = 2900)
+    SP,WC,insoil,snow=SnowRoutine(p1,pr,T[i],SP,WC,TFAC = 1)
     Re,SM=SoilMoisture(p1,insoil,SMOld)
     
     if snow:

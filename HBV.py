@@ -2,73 +2,40 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from func import *
 
-
+    
 #%%
 class HBV():
-    
+    rd=readData
+    ls=loadStates
+    lp=loadPar
+    lpv=ParamerVector
+    Sn=SnowRoutine
+    Sm=SoilMoisture
+    Ps=PrintSnow
     def __init__(self):
-        self.load()
-        self.readData('Bagmati.xlsx')
-        self.ParamerVector()
-        self.States()
+        self.rd('Bagmati.xlsx') #Hydrological Data
+        self.lp()  #group parameters
+        self.lpv() #load Parameter vecto
+        
         self.PotE=True #Input of column E is Evapotranspiration
         self.Qs=[]
         self.SPs=[]
         self.WCs=[]
         self.ins=[]
         
-        
-    def readData(self,FileName):
-        Df=pd.read_excel(FileName,index_col=0,parse_dates=True)
-        #Df.head()
-        self.Qo=Df["Qobs"].to_numpy()
-        self.Epot=Df["Epot"].to_numpy()
-        self.P=Df["P"].to_numpy()
-        self.T=Df["Temp"].to_numpy()
-        self.LTAT = np.mean(self.T)*np.ones(len(self.Qo))
-        self.AREA = 2900
-        self.TFAC=1
-    
-    def load(self):
-        self.TT = 0    #Limit temperature for rain/snow precipitation
-        self.CFMAX = 3    # Degree day factor [measures the temperature variation along the day] 
-        self.SFCF = 1     # Rainfal correction factor 
-        self.CWH = 0.05     # Maximum amount of water that can be stored in snow pack 
-        self.CFR = 0.8     # Refreezing factor 
-        #For Soil
-        self.FC = 50    # Field Capacity=Maximum of soil moisture
-        self.BETA = 1.2 # Shape Coefficient - exponential variation of the relationship
-        self.LP=0.4   
-        self.K = 0.04
-        self.K1 = 0.1
-        self.ALPHA = 0.5
-        self.CF = 0.05  #Capilarity Flux 
-        self.PERC = 0.05
-        self.MaxBas=10
-
-    def ParamerVector(self):
-        psnow=[self.TT,self.CFMAX,self.SFCF,self.CWH,self.CFR]
-        psoil=[self.FC,self.BETA]
-        #Soil moisture percentage in decimal where soil moisture reaches maximum potential evapotranspiration
-        pEvap=[self.LP]
-        pRun=[self.K,self.K1,self.ALPHA,self.CFR]
-        pMaxBas=[self.MaxBas]
-        self.p=[*psnow,*psoil,*pEvap,*pRun,*pMaxBas]
-    
     
     def sim(self):
         for i ,T in self.T:
             self.run(self.P[i],T,self.Epot[i])
     
     def run(self,P,T,E):
-        self.PrintSnow()
-        self.SnowRoutine(P,T)
-        self.PrintSnow()
+        self.Sn(P,T)
         
         #SP,WC,insoil,snow=
         print(f"SM  {self.SM}")
-        self.SoilMoisture()
+        self.Sm()
         print(f"SMOld  {self.SMOld}")
         print(f"SM  {self.SM}")
        
@@ -90,84 +57,7 @@ class HBV():
         
             
             
-    def SnowRoutine(self,P,T):
-        self.PrintSnow()
-        if (self.SP > 0):
-            self.snow = True #'SP = Snow pack
-        else:
-            self.snow = False
-
-        if P > 0 :
-            #' If the tempearature doesnt freeze
-            if T > self.TT :
-                    self.WC = self.WC + P    #' Water content increases
-            else:
-                # ' if not Snow pack increases with the precipitation conv into snow
-                self.SP = self.SP + P * self.SFCF 
-        
-        if T > self.TT :
-            melt = self.CFMAX * (T - self.TT) * self.TFAC
-            if melt > self.SP:
-                insoil = self.SP + self.WC
-                self.WC = 0
-                self.SP = 0
-            else:
-                self.SP = self.SP - melt
-                self.WC = self.WC + melt
-                if self.WC >= self.CWH * self.SP:
-                    insoil = self.WC - self.CWH * self.SP
-                    self.WC = self.CWH * self.SP
-        else:
-            refrez = self.CFR * self.CFMAX * (self.TT - T)
-            if refrez > self.WC:
-                    refrez = self.WC
-            
-            self.SP = self.SP + refrez
-            self.WC = self.WC - refrez
-            #' If there was no snow pack information then pass the valus of precipitation to the funoff rutine
-            #' If there the temperature is above the freeting threshold the pass all precipitation direc to the tanks
-            
-        if T < self.TT:
-            #' Else pass it to the SNOW PACK
-            self.SP = self.SP+P*self.SFCF
-        self.insoil=insoil
-        print(f" SP= {self.SP} , WC= {self.WC}")
-        print(f"Insoil {insoil}")
-
-    def SoilMoisture(self):
-        insoil=self.insoil
-        self.SMOld=self.SM
-        if insoil > 0:
-            R=0 #Initial recharge will be zero and below will be estimated based on Y
-            
-        #To work with the analysis of the decimal values it is divided into inger part of insoil + real part
-            if insoil < 1:
-                Y = insoil   #decimal part of the precipitation or water from the soil storage
-            else:
-                m = int(np.floor(insoil))  #Integer part of the precipitation
-                Y = insoil - m   #Decimal part of the precipitation or water from the soil storage
-                for i in range(m):
-                    if self.SM>self.FC:
-                        print(f"Increase field capacity you are having values of soil moisture up to {SM}")
-                        self.SM=self.FC
-                    dRdP = (self.SM/self.FC) ** self.BETA #' Percentage of water contribution from the soil to the groundwater
-                    if dRdP > 1:
-                        dRdP = 1
-                    
-                    self.SM = self.SM + (1 - dRdP) #This is the recharge
-                    R = R + dRdP
-        
-            dRdP = (self.SM / self.FC) ** self.BETA
-            if dRdP > 1:
-                dRdP = 1
-            
-            self.SM = self.SM + (1 - dRdP) * Y #' Could be optimized by only multiplying from the beginig the total decimal value??
-            R = R + dRdP * Y #'Amount of water RECHARGE for the tanks
-        else:
-            R=insoil #case when no rain or insoil water   
-            #Soil moisture also remains as it started and will be affected later by Evapotranspiration (other module)
-        self.R=R
-        
+           
 
     def Evapotranspiration(self,E):
         #Check if Potential evapotranspiration was provided or Actual
@@ -235,19 +125,7 @@ class HBV():
         self.LZ2=LZ2 
 
     
-    def States(self):
-        self.SP = 10 # Snow Pack
-        self.WC = 10 # Water Content in Snow Pack
-        self.SM=20 # Initial value of soil moisture, assuming less than half Field Capacity
-        self.UZ1 = 20 # Upper Zone
-        self.LZ1 = 20 # Lower Zone
 
-    def PrintSnow(self):
-        print(f"Temp Threshold {self.TT}")
-        print(f"CF Max {self.CFMAX}")
-        print(f"SFCF {self.SFCF}")
-        print(f"CWH {self.CWH}")
-        print(f"CFR {self.CFR}")
     
     def readSPar(self):
             self.TT = self.p[0] 
@@ -255,9 +133,10 @@ class HBV():
             self.SFCF = self.p[2]
             self.CWH = self.p[3]
             self.CFR = self.p[4]
-        
-A=HBV()
-A.SnowRoutine(10,10)  
+
+if __name__ == "__main__":        
+    A=HBV()
+    A.Sr(10,10)  
 
 #%%
 def Plot2Axis(x,y1,y2,var1="precip",var2="surf",Name="HRU",xmin=0,xmax=2000):
