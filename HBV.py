@@ -1,6 +1,5 @@
 #%%
 import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
 from func import *
 
@@ -18,7 +17,7 @@ class HBV():
         self.rd('Bagmati.xlsx') #Hydrological Data
         self.lp()  #group parameters
         self.lpv() #load Parameter vecto
-        
+        self.ls()  #Load states
         self.PotE=True #Input of column E is Evapotranspiration
         self.Qs=[]
         self.SPs=[]
