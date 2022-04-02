@@ -1,3 +1,5 @@
+import numpy as np
+
 def SoilMoisture(self):
     """Soil Moisture function
     Will work with the values of the object_
