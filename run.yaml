@@ -1,0 +1,23 @@
+#FileName: BasinData.txt #include path if this is not in the same directory
+FileName: Bagmati.xlsx
+Model Parameters:
+  TT  :  0    #Limit temperature for rain/snow precipitation
+  CFMAX  :  3    # Degree day factor [measures the temperature variation along the day] 
+  SFCF  :  1     # Rainfal correction factor 
+  CWH  :  0.05     # Maximum amount of water that can be stored in snow pack 
+  CFR  :  0.8     # Refreezing factor 
+  FC  :  50    # Field Capacity=Maximum of soil moisture
+  BETA  :  1.2 # Shape Coefficient - exponential variation of the relationship
+  LP : 0.4   
+  K  :  0.04
+  K1  :  0.1
+  ALPHA  :  0.5
+  CF  :  0.05  #Capilarity Flux 
+  PERC  :  0.05
+  MaxBas : 10
+States: 
+  SP :  10 # Snow Pack
+  WC :  10 # Water Content in Snow Pack
+  SM : 20  # Initial value of soil moisture, assuming less than half Field Capacity
+  UZ1 : 20 # Upper Zone
+  LZ1 : 20 # Lower Zone

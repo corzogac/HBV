@@ -17,7 +17,7 @@ def SoilMoisture(self):
             Y = insoil - m   #Decimal part of the precipitation or water from the soil storage
             for i in range(m):
                 if self.SM>self.FC:
-                    print(f"Increase field capacity you are having values of soil moisture up to {SM}")
+                    print(f"Increase field capacity you are having values of soil moisture up to {self.SM}")
                     self.SM=self.FC
                 dRdP = (self.SM/self.FC) ** self.BETA #' Percentage of water contribution from the soil to the groundwater
                 if dRdP > 1:
@@ -35,4 +35,5 @@ def SoilMoisture(self):
     else:
         R=insoil #case when no rain or insoil water   
         #Soil moisture also remains as it started and will be affected later by Evapotranspiration (other module)
+    
     self.R=R

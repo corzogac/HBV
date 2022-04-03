@@ -2,12 +2,7 @@
 from func.Main import *
 from func.SnowR import *
 from func.SoilR import *
-
-#ParamerVector()
-#States()
-PotE=True #Input of column E is Evapotranspiration
-Qs=[]
-SPs=[]
-WCs=[]
-ins=[]
+from func.EvapR import *
+from func.SurfR import *
+from func.Performance import *
 

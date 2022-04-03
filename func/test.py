@@ -1,5 +1,0 @@
-
-
-def Prin():
-    print(p)
-    

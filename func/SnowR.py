@@ -4,7 +4,9 @@ def SnowRoutine(self,P,T):
         P (float): Precipitation value
         T (float): Temperature
     """
-    self.Ps()
+    #print snow parameters
+    #self.Ps()
+    
     if (self.SP > 0):
         self.snow = True #'SP = Snow pack
     else:
@@ -43,6 +45,7 @@ def SnowRoutine(self,P,T):
     if T < self.TT:
         #' Else pass it to the SNOW PACK
         self.SP = self.SP+P*self.SFCF
+    
     self.insoil=insoil
-    print(f" SP= {self.SP} , WC= {self.WC}")
-    print(f"Insoil {insoil}")
+    #print(f" SP= {self.SP} , WC= {self.WC}")
+    #print(f"Insoil {insoil}")

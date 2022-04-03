@@ -30,10 +30,10 @@ CFLUX->		0	1
 MAXBAS->	0	50	
 UZLo->	0	300	
 Coefficients -> Snow
-CFMax ->	3 Degree day factor or Melting Factor (Snow Melt= CFMAC*(T-TT))
+CFMax ->	3 Degree day factor or Melting Factor (Snow Melt= CFMAX*(T-TT)) between (1,6)
 SFCF ->	1  Snow Fall Correction Factor (Increase about 1.3-1.5)
-CFR	-> 0.05 Refreezing coeficient
-CWH	-> 0.1 Water holding Capacity
+CFR	-> 0.05 Refreezing coeficient ()
+CWH	-> 0.1 Water holding Capacity (min 0.001)
 Initial states -> SNOW
 SP 	-> 0 Initial state Snow pack( Negative value no snow)
 WC	-> 0 Initial State Water Content of snow packet
