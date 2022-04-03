@@ -5,16 +5,17 @@ A.sim()
 A.r
 A.Pl2()
 A.Ple()
-A.Plp()
+#A.Plp()
 
 
 #%% Optimization
 from scipy import optimize
 
 def ObjF(x):
-    x=x[0]+x[1]+x[2]
-bounds=[(0,10),(-10,15),(-100,10)]
-results = optimize.shgo(ObjF, bounds, n=200, iters=500,sampling_method='sobol')
+    x=x[0]+x[1]
+    
+bounds=[(0,10),(-10,15)]
+results = optimize.shgo(ObjF, bounds, n=200, iters=5,sampling_method='sobol')
 
 #%%
 import matplotlib.pyplot as plt

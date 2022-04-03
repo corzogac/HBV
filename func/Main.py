@@ -4,7 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def readData(self,FileName):
-        Df=pd.read_excel(FileName,index_col=0,parse_dates=True)
+        if FileName.endswith("xlsx"):
+                Df=pd.read_excel(FileName,index_col=0,parse_dates=True)
+        else:
+                Df=pd.read_csv(FileName,index_col=0,parse_dates=True)
+                
         #Df.head()
         self.Qo=Df["Qobs"].to_numpy()
         self.Epot=Df["Epot"].to_numpy()

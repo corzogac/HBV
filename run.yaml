@@ -1,5 +1,5 @@
-#FileName: BasinData.txt #include path if this is not in the same directory
-FileName: Bagmati.xlsx
+FileName: BasinData.csv #include path if this is not in the same directory
+#FileName: Bagmati.xlsx
 Model Parameters:
   TT  :  0    #Limit temperature for rain/snow precipitation
   CFMAX  :  3    # Degree day factor [measures the temperature variation along the day] 

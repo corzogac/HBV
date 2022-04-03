@@ -86,7 +86,7 @@ class HBV():
             self.Qruns.append(self.Qs)
             plt.visible=False
             plt.plot(self.Qs)
-            plt.savefig(f"Run{i}")    
+            plt.savefig(f"Run/Run{i}")    
             
             
     
